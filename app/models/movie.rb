@@ -1,4 +1,9 @@
 class Movie < ActiveRecord::Base
+  before_save :capitalize_title
+  def capitalize_title
+    self.title = self.title.split(/\s+/).map(&:downcase).map(&:capitalize).join ' '
+  end
+  
   def self.all_ratings ; %w[G PG PG-13 R NC-17] ; end
   validates :title, presence: true
   validates :release_date, presence: true

@@ -1,4 +1,14 @@
 class MoviesController < ApplicationController
+  def movies_with_filters
+    if params[:review_threshold]
+      @movies = Movie.with_good_reviews(params[:review_threshold])
+    end
+    @movies = @movies.for_kids if params[:for_kids]
+    if params[:days_reviewed]
+      @movies = @movies.recently_reviewed(params[:days_reviewed])
+    end
+  end
+
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
   end

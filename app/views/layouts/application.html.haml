@@ -7,11 +7,11 @@
     = csrf_meta_tags
 
   %body
+    = render partial: 'sessions/login'
     %h1.title Rotten Potatoes!
+    - if flash[:notice]
+      #notice.message= flash[:notice]
+    - elsif flash[:warning]
+      #warning.message= flash[:warning]
     #main
-      - if flash[:notice]
-        #notice.message= flash[:notice]
-      - elsif flash[:warning]
-        #warning.message= flash[:warning]
-
       = yield

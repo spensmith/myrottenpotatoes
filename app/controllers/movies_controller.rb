@@ -1,4 +1,11 @@
 class MoviesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+
+  def record_not_found
+    flash[:notice] = "Moive recrod cannot be found."
+    redirect_to movies_path
+  end
+
   def movies_with_filters
     if params[:review_threshold]
       @movies = Movie.with_good_reviews(params[:review_threshold])
